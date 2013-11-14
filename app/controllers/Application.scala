@@ -20,8 +20,10 @@ object Application extends Controller {
   private var modelImpl: TinyUrlModelBase = DbTinyUrlModel;
   private var defaultUriSchemePrefix = "http://"
   
+  val createUrlForm = Form( "longurl" -> nonEmptyText )
+    
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index(createUrlForm))
   }
 
   /* Function createtinyurl 
@@ -39,8 +41,6 @@ object Application extends Controller {
   def createtinyurl = Action {
 	  implicit Request => {
 	    
-		 play.api.Logger.info(Request.host)
-
 	    // TODO: add checks for 
 	    //		1. forbidden protocols 
 	    //		2. forbidden forwarding domains/urls as regexs
@@ -48,9 +48,6 @@ object Application extends Controller {
 	    //				a. incoming ip addresses 
 	    //				b. # of request / last hr   
 		 
-		  val createUrlForm = Form(
-				  "longurl" -> nonEmptyText
-				  )
 				  
 		  createUrlForm.bindFromRequest.fold(
 			    errors => BadRequest("Missing longUrl in form input"),

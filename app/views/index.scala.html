@@ -1,7 +1,14 @@
-@(message: String)
+@(taskForm: Form[String])
+@import helper._
 
-@main("Welcome to Play") {
-
-    @play20.welcome(message)
-
+@main("Url shortener") {
+	<h1>Please enter an Url to shorten</h1>
+    
+    @form(routes.Application.createtinyurl) {
+        
+        @inputText(taskForm("longurl")) 
+        
+        <input type="submit" value="Shorten">
+        
+    }
 }
