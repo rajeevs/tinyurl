@@ -1,3 +1,8 @@
+/* 
+ * Author: Rajeev Sudhakar
+ * Date  : 11/9/2013
+ */
+
 package models
 
 // This object converts from and back to Base36 representation from Long
