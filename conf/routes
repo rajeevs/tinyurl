@@ -1,0 +1,27 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+
+# Main API endpoints
+
+# POST endpoints
+# creates a url
+# POST request since this is creating resource per REST principles
+POST     /createtinyurl        		controllers.Application.createtinyurl
+
+
+# GET endpoints
+
+# redirects a hascode to the correct Url
+# get since this is only accessing a resource
+GET 	/:hashcode					controllers.Application.redirect(hashcode: String)
+
+# get click statistics for a Url
+GET		/:hashcode/stats			controllers.Application.getstats(hashcode: String)
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

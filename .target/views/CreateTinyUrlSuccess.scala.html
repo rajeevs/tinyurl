@@ -1,0 +1,16 @@
+@(url: String, tinyUrl: String)
+
+
+@import helper._
+@import play.api.libs.json.Json
+
+@{ 
+	val jsonCreateTinyUrlResults = Json.obj(
+					   				"OriginalUrl" -> url,
+					   				"TinyUrl" -> tinyUrl
+	   							)
+
+	val resultsAsJsonString = Json.stringify(jsonCreateTinyUrlResults)
+
+	resultsAsJsonString
+}
