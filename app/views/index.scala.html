@@ -4,9 +4,24 @@
 @main("Url shortener") {
 	<h1>Please enter an Url to shorten</h1>
     
-    @form(routes.Application.createtinyurl) {
+<!--    @form(routes.Application.createtinyurl) {
         	<label for="longurl">Url to shorten</label> 
-            <input type="text" id="longurl" name="longurl" value="">
+            	<input type="text" id="longurl" name="longurl" value="">
         	<input type="submit" value="Shorten">
     }
+-->
+
+    <form name="myform" onsubmit="CreateTinyUrl('@(routes.Application.createtinyurl)');return false;">
+	<label for="longurl">Url to shorten</label> 
+    	<input type="text" id="longurl" name="longurl" value="" onclick="init()">
+	<script>setInitialValueForUrlField();</script>
+	<input type="submit" value="Shorten">
+   </form>
+
+   <div id=output">
+	<h2 id="urllistheading"> </h2>
+	<ul id="urllist">
+	</ul>
+   </div>
+
 }

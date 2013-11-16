@@ -8,6 +8,73 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+	<script type="text/javascript">
+		function onError(e) {
+		  alert("Error " + e.target.status + " occurred while receiving the document.");
+		}
+
+		function updateUrlList(tinyUrl, originalUrl){
+			var numcurrenturls = $("#urllist li").length;
+			if(numcurrenturls == 0)
+			{
+				$("#urllistheading").text('The following are your short urls:');
+			}
+
+			$("#urllist").append('<li>Your URL <a href="' + originalUrl + '">'+ originalUrl + '</a> was shortened to <a href="' + tinyUrl + '">' + tinyUrl +' </a></li>'); 
+		}
+	
+		function CreateTinyUrl(postAddress) {
+			var longUrl = $('#longurl').val();
+
+			if(isLongUrlValueChanged() == false)
+			{
+				alert("Please enter an URL to be shortened : [" + longUrl + "] is not valid");
+				return false;
+			}
+
+			var http = new XMLHttpRequest();
+
+			var url = postAddress +"?longurl=" + longUrl;
+
+			//sending SYNC request through 3rd param false. ASYNC not working consistently
+			http.open("POST", url, false);
+
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+			http.send();
+
+			if (http.readyState == 4 && http.status == 200) {
+			    	var responseText = http.responseText;
+			    	var result = JSON.parse(responseText);
+				updateUrlList(result.tinyurl, result.originalurl);
+				return false;
+			}
+
+		}
+	</script>
+	<script type="text/javascript">
+                var initialValueForUrlField = 'Enter URL here';
+
+		function isLongUrlValueChanged()
+		{
+			var longUrl = $('#longurl').val();
+			return !(longUrl === initialValueForUrlField) && (longUrl != "");
+		}
+
+		function setInitialValueForUrlField()
+		{
+			$('#longurl').val(initialValueForUrlField);
+		}
+
+		function init() {
+			var longUrl = $('#longurl').val();
+			if(longUrl == initialValueForUrlField )
+			{
+				$('#longurl').val('');
+			}
+		}
+	</script>   
     </head>
     <body>
         @content
